@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>College Admission Form</title>
+</head>`
+<body>
+    <div class="form-container">
+        <h1>College Admission Form</h1>
+        <form action="#">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required />
+	    <br><br>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required />
+	    <br><br>
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required />
+	    <br><br>
+
+            <label for="phone">Mobile Number:</label>
+            <input type="tel" id="phone" name="phone" required />
+ 	    <br><br>
+
+            <label for="course">Course</label>
+            <select id="course" name="course" required>
+                <option value="btech">BTech</option>
+                <option value="bca">BCA</option>
+                <option value="bba">BBA</option>
+            </select>
+	    <br><br>`
+            
+            <label for="agree">
+                <input type="checkbox" id="agree" name="agree" required />
+                I confirm all the information
+            </label>
+	    <br><br>
+            <hr>
+
+            <button type="submit">Submit</button>
+        </form>
+</body>
+</html>
