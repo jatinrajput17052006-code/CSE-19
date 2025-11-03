@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    #chat-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    #user-list {
+      margin-bottom: 10px;
+    }
+
+    #messages {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow-y: auto;
+      flex-grow: 1;
+    }
+
+    .sender {
+      text-align: right;
+      color: #0066ff; /* Sender message color */
+    }
+
+    .receiver {
+      text-align: left;
+      color: #009900; /* Receiver message color */
+    }
+
+    form {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #ddd;
+      padding-top: 10px;
+    }
+
+    input {
+      flex-grow: 1;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+
+    button {
+      padding: 8px 16px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="chat-container">
+    <div id="user-list"></div>
+    <ul id="messages"></ul>
+    <form id="form" action="">
+      <input id="usernameInput" autocomplete="off" placeholder="Your username" />
+      <input id="messageInput" autocomplete="off" placeholder="Type your message..." disabled />
+      <button type="button" id="sendButton" onclick="sendMessage()">Send</button>
+    </form>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    let usernameSet = false;
+
+    // Listen for chat history from the server
+    socket.on('chatHistory', (history) => {
+      const messages = document.getElementById('messages');
+      messages.innerHTML = ''; // Clear existing messages
+      history.forEach((entry) => {
+        appendMessage(entry.username, entry.message);
+      });
+    });
+
+    // Listen for messages from the server
+    socket.on('message', (data) => {
+      appendMessage(data.username, data.message);
+    });
+
+    // Listen for user list updates
+    socket.on('userList', (userList) => {
+      updateUserList(userList);
+    });
+
+    // Listen for user separator messages
+    socket.on('userSeparator', (username) => {
+      appendSeparator(username);
+    });
+
+    // Function to append a message to the UI
+    function appendMessage(username, message) {
+      const messages = document.getElementById('messages');
+      const li = document.createElement('li');
+      li.className = usernameSet && username === document.getElementById('usernameInput').value.trim() ? 'sender' : 'receiver';
+      li.setAttribute('data-username', username);
+      li.innerHTML = `<strong>${username}</strong>: ${message}`;
+      messages.appendChild(li);
+      messages.scrollTop = messages.scrollHeight; // Auto-scroll to the bottom
+    }
+
+    // Function to update the user list in the UI
+    function updateUserList(userList) {
+      const userListContainer = document.getElementById('user-list');
+      userListContainer.innerHTML = `<strong>Users:</strong> ${userList.join(', ')}`;
+    }
+
+    // Function to append a user separator to the UI
+    function appendSeparator(username) {
+      const messages = document.getElementById('messages');
+      const li = document.createElement('li');
+      li.className = 'user-separator';
+      li.textContent = `----- ${username} joined the chat -----`;
+      messages.appendChild(li);
+    }
+
+    // Function to handle button click or Enter key press
+    function sendMessage() {
+      if (!usernameSet) {
+        const username = document.getElementById('usernameInput').value.trim();
+        if (username) {
+          // Emit a login event for the username
+          socket.emit('login', username);
+          // Disable the username input and enable the message input
+          document.getElementById('usernameInput').disabled = true;
+          document.getElementById('messageInput').disabled = false;
+          document.getElementById('sendButton').disabled = false;
+          usernameSet = true;
+        }
+      } else {
+        const message = document.getElementById('messageInput').value.trim();
+        if (message) {
+          // Emit a message event with the username and message
+          socket.emit('message', { username: document.getElementById('usernameInput').value.trim(), message });
+          // Clear the message input field
+          document.getElementById('messageInput').value = '';
+        }
+      }
+    }
+
+    // Listen for Enter key press in the message input
+    document.getElementById('messageInput').addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        sendMessage();
+      }
+    });
+  </script>
+</body>
+</html>
