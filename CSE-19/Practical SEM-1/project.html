@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Clone - Practice</title>
+    <style>
+        /* CSS RESET & VARIABLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --amazon-dark: #131921;
+            --amazon-light: #232f3e;
+            --amazon-yellow: #febd69;
+            --bg-gray: #eaeded;
+        }
+
+        body {
+            background-color: var(--bg-gray);
+        }
+
+        /* NAVBAR */
+        header {
+            width: 100%;
+        }
+
+        .navbar {
+            height: 60px;
+            background-color: var(--amazon-dark);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            color: white;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-right: 20px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            padding: 5px;
+        }
+
+        .nav-logo:hover { border: 1px solid white; }
+
+        .nav-search {
+            flex-grow: 1;
+            display: flex;
+            height: 40px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0 15px;
+        }
+
+        .search-select {
+            background: #f3f3f3;
+            width: 50px;
+            border: none;
+            border-right: 1px solid #ccc;
+        }
+
+        .search-input {
+            flex-grow: 1;
+            border: none;
+            padding: 0 10px;
+            font-size: 1rem;
+        }
+
+        .search-btn {
+            background-color: var(--amazon-yellow);
+            width: 45px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .nav-tools {
+            display: flex;
+            gap: 20px;
+            font-size: 0.85rem;
+        }
+
+        .nav-tools span { font-weight: bold; display: block; }
+
+        /* SECONDARY NAV */
+        .sub-nav {
+            height: 40px;
+            background-color: var(--amazon-light);
+            display: flex;
+            align-items: center;
+            color: white;
+            padding: 0 20px;
+            gap: 15px;
+            font-size: 0.9rem;
+        }
+
+        /* HERO SECTION */
+        .hero-section {
+            background-image: linear-gradient(to bottom, transparent, var(--bg-gray)), 
+                              url('https://images-eu.ssl-images-amazon.com/images/G/31/img21/Fashion/Event/Gateway/WRS-Jun/PC_Hero_1500x600_2._CB667371753_.jpg');
+            background-size: cover;
+            height: 600px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* PRODUCT GRID */
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 0 20px;
+            margin-top: -300px; /* Pulls products over the hero image */
+            position: relative;
+            z-index: 2;
+        }
+
+        .card {
+            background-color: white;
+            padding: 20px;
+            height: 420px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card h2 { font-size: 1.3rem; margin-bottom: 10px; }
+
+        .card-img {
+            height: 80%;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+        }
+
+        .card a {
+            text-decoration: none;
+            color: #007185;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+
+        .card a:hover { color: #c45500; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="navbar">
+            <div class="nav-logo">amazon.com</div>
+            
+            <div class="nav-search">
+                <select class="search-select"><option>All</option></select>
+                <input type="text" class="search-input" placeholder="Search Amazon">
+                <button class="search-btn">🔍</button>
+            </div>
+
+            <div class="nav-tools">
+                <div>Account<span>& Lists</span></div>
+                <div>Returns<span>& Orders</span></div>
+                <div style="font-size: 1.2rem;">🛒 <span>Cart</span></div>
+            </div>
+        </div>
+
+        <div class="sub-nav">
+            <div>☰ All</div>
+            <div>Today's Deals</div>
+            <div>Customer Service</div>
+            <div>Registry</div>
+            <div>Gift Cards</div>
+            <div>Sell</div>
+        </div>
+    </header>
+
+    <main>
+        <div class="hero-section"></div>
+
+        <div class="product-container">
+            <div class="card">
+                <h2>Gaming Accessories</h2>
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=400');"></div>
+                <a href="#">See more</a>
+            </div>
+
+            <div class="card">
+                <h2>Home Refresh</h2>
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?q=80&w=400');"></div>
+                <a href="#">Shop kitchen tools</a>
+            </div>
+
+            <div class="card">
+                <h2>Smart Watches</h2>
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=400');"></div>
+                <a href="#">Explore gadgets</a>
+            </div>
+
+            <div class="card">
+                <h2>Pet Supplies</h2>
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?q=80&w=400');"></div>
+                <a href="#">See more</a>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
