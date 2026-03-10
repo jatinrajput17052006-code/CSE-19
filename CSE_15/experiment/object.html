@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Document</title>
+</head>
+<body>
+       
+
+</body>
+<script>
+
+    const student = {
+        name: 'John',
+        age: 30,
+        address:{
+            street:10,
+            city:"ghaziabad",
+            pincode:201001,
+            state:"UP"
+        },
+        course:"btech",
+        branch:"CSE",
+        year:2026,
+        getinfo:function(){
+            return `Name: ${this.name}, Age: ${this.age}, Course: ${this.course}, Branch: ${this.branch}, Year: ${this.year}`;
+        },
+        subjects:["Maths","Physics","Chemistry"]
+    };
+    // console.log(student);
+    // console.log(student.getinfo());
+    // console.log(student.address.city);
+    // console.log(student.address.pincode);
+    // console.log(student.address.state);
+    // console.log(student.address.street);
+    // console.log(student.subjects[0]);
+
+    // console.log(delete student.name);
+    // console.log(student);
+
+    // for( let key in student){
+    //     console.log(student[key]);
+    // }
+
+
+    let myinfo = new Object();
+    myinfo.name = "John";
+    myinfo.age = 30;
+    myinfo.course = "btech";
+    myinfo.branch = "CSE";
+    myinfo.year = 2026;
+    console.log(myinfo);
+
+</script>
+</html>
